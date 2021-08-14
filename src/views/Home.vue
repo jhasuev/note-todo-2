@@ -5,7 +5,12 @@
     </div>
     <card title="Все заметки">
       <div>
-        <note-item class="notes__item" v-for="n in 2" :key="n" />
+        <note-item
+          v-for="note in getNotes"
+          :key=note.id
+          :note=note
+          class="notes__item"
+        />
       </div>
     </card>
   </div>
@@ -13,11 +18,17 @@
 
 <script>
 import NoteItem from '../components/note-item'
+import { mapGetters } from "vuex"
 export default {
+  name: "Home",
   components: {
     NoteItem,
   },
-  name: "Home",
+  computed: {
+    ...mapGetters([
+      'getNotes',
+    ])
+  },
 }
 </script>
 

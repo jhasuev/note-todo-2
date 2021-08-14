@@ -1,21 +1,43 @@
 <template>
   <card class="note">
-    <div class="note__title">Название заметки 12678Название заметки 12678Название заметки 12678Название заметки 12678</div>
+    <div class="note__title">{{ note.title }}</div>
     <div class="note__todos">
-      <div class="note__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
-      <div class="note__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
-      <div class="note__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
+      <div
+        v-for="(todo, i) in getTodos"
+        :key=i
+        class="note__todos-item"
+      >– {{ todo }}</div>
     </div>
     <div class="note__actions">
-      <button class="btn note__actions-item">Редактировать</button>
-      <button class="btn btn--red note__actions-item">Удалить</button>
+      <button @click="onEdit" class="btn note__actions-item">Редактировать</button>
+      <button @click="onRemove" class="btn btn--red note__actions-item">Удалить</button>
     </div>
   </card>
 </template>
 
 <script>
+const TODOS_MAX_SHOW = 3
 export default {
   name: "Note",
+  props: {
+    note: { type: Object, default: () => ({}) },
+  },
+  computed: {
+    getTodos() {
+      const todos = this.note.todos.map(todo => todo.title).filter((todo, i) => i < TODOS_MAX_SHOW)
+      if (this.note.todos.length > TODOS_MAX_SHOW) todos.push("...")
+      return todos
+    },
+  },
+  methods: {
+    onEdit() {
+      this.$router.push({ name: 'edit', params: { id: this.note.id } })
+    },
+
+    onRemove() {
+      
+    },
+  },
 }
 </script>
 
