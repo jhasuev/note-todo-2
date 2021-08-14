@@ -1,6 +1,5 @@
 <template>
-  <div class="card">
-    <h2 class="card__title">Создание заметки</h2>
+  <card title="Создание заметки">
     <div class="add">
       <input type="text" class="form-field" placeholder="Название заметки">
       <div class="add__todos">
@@ -18,24 +17,14 @@
         <button class="btn btn--green">Создать заметку</button>
       </div>
     </div>
-  </div>
+  </card>
 
-  <div class="card">
-    <h2 class="card__title">Изменения заметки</h2>
+  <card title="Изменения заметки">
     <div class="edit">
       <input type="text" class="form-field edit__title-field" placeholder="Название заметки">
       <div class="edit__todos">
         <div class="edit__todos-list">
-          <div class="edit__todos-item" v-for="n in 5" :key="n">
-            <div class="edit__todos-checkbox">
-              <label class="checkbox">
-                <input type="checkbox" class="checkbox__input" checked>
-                <i class="checkbox__icon" />
-              </label>
-            </div>
-            <input type="text" class="form-field  edit__todos-field" placeholder="Название заметки">
-            <button class="btn btn--red edit__todos-remove-btn" title="Удалить">&times;</button>
-          </div>
+          <todo-item class="edit__todos-item" v-for="n in 5" :key="n" />
         </div>
         <button class="btn edit__todos-add-btn">Добавить пункт</button>
       </div>
@@ -48,14 +37,13 @@
         <button class="btn  edit__actions-btn">Повторить отмененное изменение</button>
       </div>
     </div>
-  </div>
+  </card>
   
 
   <div class="notes">
-    <div class="card">
-      <h2 class="card__title">Все заметки</h2>
 
-      <div class="card notes__item" v-for="n in 2" :key="n">
+    <card title="Все заметки">
+      <card class="notes__item" v-for="n in 2" :key="n">
         <div class="notes__title">Название заметки 12678Название заметки 12678Название заметки 12678Название заметки 12678</div>
         <div class="notes__todos">
           <div class="notes__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
@@ -66,35 +54,24 @@
           <button class="btn notes__actions-item">Редактировать</button>
           <button class="btn btn--red notes__actions-item">Удалить</button>
         </div>
-      </div>
-        
-    </div>
+      </card>
+
+    </card>
   </div>
 
 </template>
 
 <script>
-
+import TodoItem from "@/components/todo-item"
 export default {
   name: 'App',
+  components: {
+    TodoItem,
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-
-.card {
-  max-width: 400px;
-  margin: 15px auto;
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 0 0 5px rgba(0,0,0,.25);
-
-  &__title {
-    text-align: center;
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-}
 
 .add {
   &__todos {
@@ -124,22 +101,10 @@ export default {
 
     &-list {}
     &-item {
-      display: flex;
-      align-items: center;
-
       margin-bottom: 10px;
-
       &:last-child {
         margin-bottom: 0;
       }
-    }
-    &-checkbox {
-      margin-right: 10px;
-    }
-    &-field {
-      margin-right: 10px;
-    }
-    &-remove-btn {
     }
     &-add-btn {
       margin-top: 10px;
