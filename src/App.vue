@@ -36,6 +36,28 @@
       </div>
     </div>
   </div>
+  
+
+  <div class="notes">
+    <div class="card">
+      <h2 class="card__title">Все заметки</h2>
+
+      <div class="card notes__item" v-for="n in 2" :key="n">
+        <div class="notes__title">Название заметки 12678Название заметки 12678Название заметки 12678Название заметки 12678</div>
+        <div class="notes__todos">
+          <div class="notes__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
+          <div class="notes__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
+          <div class="notes__todos-item">– Название пункта Название пункта Название пункта Название пункта Название пункта </div>
+        </div>
+        <div class="notes__actions">
+          <button class="btn notes__actions-item">Редактировать</button>
+          <button class="btn btn--red notes__actions-item">Удалить</button>
+        </div>
+      </div>
+        
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -51,7 +73,12 @@ export default {
   max-width: 400px;
   margin: 15px auto;
   padding: 15px;
+  border-radius: 4px;
   box-shadow: 0 0 5px rgba(0,0,0,.25);
+
+  & &:last-child {
+    margin-bottom: 0;
+  }
 
   &__title {
     text-align: center;
@@ -79,5 +106,36 @@ export default {
   }
 }
 
+.notes {
+  margin-top: 30px;
+  &__title {
+    font-size: 15px;
+  }
+  &__todos {
+    margin-top: 15px;
+    &-item {
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1;
+    }
+  }
+  &__actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 360px) {
+      flex-direction: column;
+      &-item {
+        margin-bottom: 10px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
 
 </style>
