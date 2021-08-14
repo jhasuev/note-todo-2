@@ -1,9 +1,9 @@
 <template>
   <div class="notes">
+    <div class="notes__create-btn-wrapper">
+      <button class="btn">+ Создать заметку</button>
+    </div>
     <card title="Все заметки">
-      <div class="notes__create-btn-wrapper">
-        <button class="btn btn--green">+ Создать заметку</button>
-      </div>
       <div>
         <note-item class="notes__item" v-for="n in 2" :key="n" />
       </div>
@@ -25,8 +25,10 @@ export default {
 
 .notes {
   &__create-btn-wrapper {
-    text-align: center;
-    margin-bottom: 25px;
+    padding-top: 15px;
+    text-align: right;
+    max-width: 400px;
+    margin: auto;
   }
 
   &__item {
