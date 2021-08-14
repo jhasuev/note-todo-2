@@ -1,2 +1,129 @@
 @import url("./reset.scss");
 
+body {
+  font: 18px "Trebuchet MS";
+  user-select: none;
+  padding: 15px;
+}
+
+@mixin placeholder-styles {
+  color: #000;
+  opacity: .35;
+  font: 15px "Trebuchet MS";
+}
+
+::-webkit-input-placeholder { @include placeholder-styles }
+::-moz-placeholder          { @include placeholder-styles }/* Firefox 19+ */
+:-moz-placeholder           { @include placeholder-styles }/* Firefox 18- */
+:-ms-input-placeholder      { @include placeholder-styles }
+
+
+.form-field {
+  width: 100%;
+  font: 15px "Trebuchet MS";
+  padding: 5px 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+
+  transition: box-shadow .3s;
+
+  &:focus {
+    box-shadow: 0 0 10px rgba(0,0,0,.25);
+  }
+}
+
+.btn {
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+
+  border-radius: 4px;
+  background-color: #333;
+  color: #ddd;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    opacity: 0;
+
+    transition: opacity .3s;
+  }
+
+  &:hover::before {
+    opacity: .2;
+  }
+
+  &:active::before {
+    opacity: .3;
+  }
+
+  &--red {
+    background-color: #900;
+  }
+  &--green {
+    background-color: #090;
+  }
+}
+
+
+.checkbox {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-size: 0;
+
+  &__input {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  &__icon {
+    position: relative;
+    z-index: 1;
+    
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+
+    border: 1px solid #eee;
+    transition: .2s;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 3px;
+      width: 9px;
+      height: 4px;
+      border: 2px solid #ddd;
+      border-top: none;
+      border-right: none;
+
+      transform: rotate(-45deg);
+
+      opacity: 0;
+      transition: opacity .2s;
+    }
+  }
+
+  &__input:checked ~ &__icon {
+    background-color: #333;
+    border-color: #333;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
