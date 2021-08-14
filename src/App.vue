@@ -36,6 +36,36 @@
       </div>
     </div>
   </div>
+
+  <div class="card">
+    <h2 class="card__title">Изменения заметки</h2>
+    <div class="edit">
+      <input type="text" class="form-field edit__title-field" placeholder="Название заметки">
+      <div class="edit__todos">
+        <div class="edit__todos-list">
+          <div class="edit__todos-item" v-for="n in 5" :key="n">
+            <div class="edit__todos-checkbox">
+              <label class="checkbox">
+                <input type="checkbox" class="checkbox__input" checked>
+                <i class="checkbox__icon" />
+              </label>
+            </div>
+            <input type="text" class="form-field  edit__todos-field" placeholder="Название заметки">
+            <button class="btn btn--red edit__todos-remove-btn" title="Удалить">&times;</button>
+          </div>
+        </div>
+        <button class="btn edit__todos-add-btn">Добавить пункт</button>
+      </div>
+      <div class="edit__actions">
+        <!-- скрывать и показывать кнопки взависимости от состояния -->
+        <button class="btn  btn--green  edit__actions-btn">Сохранить</button>
+        <button class="btn  btn--red  edit__actions-btn">Отменить редактирование</button>
+        <button class="btn  btn--red  edit__actions-btn">Удалить</button>
+        <button class="btn  btn--red  edit__actions-btn">Отменить внесенное изменение</button>
+        <button class="btn  edit__actions-btn">Повторить отмененное изменение</button>
+      </div>
+    </div>
+  </div>
   
 
   <div class="notes">
@@ -105,6 +135,49 @@ export default {
     text-align: right;
   }
 }
+
+.edit {
+  &__title-field {}
+  &__todos {
+    margin-top: 20px;
+    border: 1px solid #eee;
+    padding: 15px;
+
+    &-list {}
+    &-item {
+      display: flex;
+      align-items: center;
+
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    &-checkbox {
+      margin-right: 10px;
+    }
+    &-field {
+      margin-right: 10px;
+    }
+    &-remove-btn {
+    }
+    &-add-btn {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+  &__actions {
+    &-btn {
+      width: 100%;
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 
 .notes {
   margin-top: 30px;
