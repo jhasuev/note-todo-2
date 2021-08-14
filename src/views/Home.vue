@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import NoteItem from '../components/note-item.vue'
+import NoteItem from '../components/note-item'
 export default {
   components: {
     NoteItem,
