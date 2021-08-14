@@ -89,10 +89,6 @@ export default {
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(0,0,0,.25);
 
-  & &:last-child {
-    margin-bottom: 0;
-  }
-
   &__title {
     text-align: center;
     font-size: 20px;
@@ -164,6 +160,11 @@ export default {
 
 .notes {
   margin-top: 30px;
+  &__item {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
   &__title {
     font-size: 15px;
   }
