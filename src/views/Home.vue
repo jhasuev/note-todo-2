@@ -9,7 +9,7 @@
           v-for="note in getNotes"
           :key=note.id
           :note=note
-          @remove=onRemove(note.id)
+          @remove=remove(note.id)
           @edit=onEdit(note.id)
           class="notes__item"
         />
@@ -36,20 +36,15 @@ export default {
   methods: {
     ...mapActions([ 'removeNote' ]),
 
-    async onRemove(noteId) {
-      try {
-        await this.$refs.confirm.show({
-          title: "Подтверждение",
-          text: "Вы точно хотите удалить эту заметку?",
-          yesBtn: "Да",
-          noBtn: "Нет",
-        })
-
+    remove(noteId) {
+      this.$refs.confirm.show({
+        title: "Подтверждение",
+        text: "Вы точно хотите удалить эту заметку?",
+        yesBtn: "Да",
+        noBtn: "Нет",
+      }).then(() => {
         this.removeNote(noteId)
-        console.log(`note with id ${noteId} was removed...`)
-      } catch (e) {
-        console.log(`note with id ${noteId} was not removed...`)
-      }
+      })
     },
 
     onEdit(noteId) {

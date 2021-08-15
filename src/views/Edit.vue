@@ -24,13 +24,11 @@
         >Добавить пункт</button>
       </div>
       <div class="edit__actions">
-        <!-- скрывать и показывать кнопки взависимости от состояния -->
         <button
           class="btn btn--full btn--green  edit__actions-btn"
           :disabled="!canSave"
           @click=save
         >Сохранить</button>
-
 
         <button
           v-if="canRedo"
@@ -56,8 +54,7 @@
 </template>
 
 <script>
-// TODO: вынести куда нибудь
-const TODO_ITEM = '{ "title": "", "done": false }'
+import config from "@/config"
 import TodoItem from "@/components/todo-item"
 import ConfirmPopup from "@/components/confirm-popup"
 import Validation from "@/valid"
@@ -156,40 +153,31 @@ export default {
       this.redidNote = ""
     },
 
-    async cancel() {
-      try {
-        await this.$refs.confirm.show({
-          title: "Подтверждение",
-          text: "Вы точно хотите отменить редактирование? Изменения будут потеряны.",
-          yesBtn: "Да",
-          noBtn: "Нет",
-        })
-
+    cancel() {
+      this.$refs.confirm.show({
+        title: "Подтверждение",
+        text: "Вы точно хотите отменить редактирование? Изменения будут потеряны.",
+        yesBtn: "Да",
+        noBtn: "Нет",
+      }).then(() => {
         this.$router.push({ name: 'home' })
-      } catch (e) {
-        console.log(e);
-      }
+      })
     },
     
-    async remove() {
-      try {
-        await this.$refs.confirm.show({
-          title: "Подтверждение",
-          text: "Вы точно хотите удалить эту заметку?",
-          yesBtn: "Да",
-          noBtn: "Нет",
-        })
-
+    remove() {
+      this.$refs.confirm.show({
+        title: "Подтверждение",
+        text: "Вы точно хотите удалить эту заметку?",
+        yesBtn: "Да",
+        noBtn: "Нет",
+      }).then(() => {
         this.removeNote(this.note.id)
-        console.log(`note with id ${this.note.id} was removed...`)
         this.$router.push({ name: 'home' })
-      } catch (e) {
-        console.log(`note with id ${this.note.id} was not removed...`)
-      }
+      })
     },
 
     addTodoItem(){
-      this.note.todos.push(JSON.parse( TODO_ITEM ))
+      this.note.todos.push(JSON.parse( config.todoItemTpl ))
     },
 
     onClickAddTodoItem(){

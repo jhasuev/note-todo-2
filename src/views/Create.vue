@@ -36,7 +36,7 @@
 </template>
 
 <script>
-const TODO_ITEM = '{ "title": "", "done": false }'
+import config from "@/config"
 import Validation from "@/valid"
 import { mapActions } from "vuex"
 export default {
@@ -71,7 +71,7 @@ export default {
     ...mapActions([ 'addNote' ]),
 
     addTodoItem(){
-      this.note.todos.push(JSON.parse(  TODO_ITEM  ))
+      this.note.todos.push(JSON.parse(  config.todoItemTpl  ))
     },
 
     onClickAddTodoItem(){

@@ -1,10 +1,10 @@
+import config from "@/config"
+
 export default {
-  noteTitle: { min: 2, max: 100, required: true },
-  todoTitle: { min: 1, required: true },
 
   isValid(type, str){
     str = str.trim()
-    const rules = this[type]
+    const rules = config[type]
     let errors = []
 
     if (typeof rules.required == 'boolean' && rules.required && !str) errors.push(`Поле нужно заполнить`)
