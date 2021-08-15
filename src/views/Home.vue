@@ -1,7 +1,7 @@
 <template>
   <div class="notes">
     <div class="notes__create-btn-wrapper">
-      <button class="btn">+ Создать заметку</button>
+      <button class="btn" @click="goToCreate()">+ Создать заметку</button>
     </div>
     <card title="Все заметки">
       <div>
@@ -10,6 +10,7 @@
           :key=note.id
           :note=note
           @remove=onRemove(note.id)
+          @edit=onEdit(note.id)
           class="notes__item"
         />
       </div>
@@ -49,6 +50,14 @@ export default {
       } catch (e) {
         console.log(`note with id ${noteId} was not removed...`)
       }
+    },
+
+    onEdit(noteId) {
+      this.$router.push({ name: 'edit', params: { id: noteId } })
+    },
+
+    goToCreate() {
+      this.$router.push({ name: 'create' })
     },
   },
 }

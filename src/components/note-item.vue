@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     onEdit() {
-      this.$router.push({ name: 'edit', params: { id: this.note.id } })
+      this.$emit("edit")
     },
 
     onRemove() {
