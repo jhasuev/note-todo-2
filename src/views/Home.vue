@@ -22,7 +22,7 @@
 <script>
 import NoteItem from '../components/note-item'
 import ConfirmPopup from "@/components/confirm-popup"
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 export default {
   name: "Home",
   components: {
@@ -30,11 +30,11 @@ export default {
     ConfirmPopup,
   },
   computed: {
-    ...mapGetters([
-      'getNotes',
-    ])
+    ...mapGetters([ 'getNotes' ])
   },
   methods: {
+    ...mapActions([ 'removeNote' ]),
+
     async onRemove(noteId) {
       try {
         await this.$refs.confirm.show({
@@ -44,9 +44,10 @@ export default {
           noBtn: "Нет",
         })
 
-        console.log("REMOVE THIS", noteId)
+        this.removeNote(noteId)
+        console.log(`note with id ${noteId} was removed...`)
       } catch (e) {
-        console.log("NOT REMOVE THIS", noteId)
+        console.log(`note with id ${noteId} was not removed...`)
       }
     },
   },

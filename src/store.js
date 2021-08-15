@@ -30,9 +30,17 @@ const store = createStore({
     getNotes: state => state.notes
   },
   
-  mutations: {},
+  mutations: {
+    REMOVE_NOTE(state, noteId) {
+      state.notes = state.notes.filter(note => note.id != noteId)
+    },
+  },
 
-  actions: {},
+  actions: {
+    removeNote({ commit }, noteId) {
+      commit("REMOVE_NOTE", noteId)
+    },
+  },
 })
 
 export default store
