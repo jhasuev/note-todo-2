@@ -31,12 +31,21 @@ const store = createStore({
   },
   
   mutations: {
+    ADD_NOTE(state, note) {
+      const id = state.notes.reduce((currentId, note) => currentId < note.id ? note.id : currentId, 0) + 1
+      state.notes.unshift({ id, ...note })
+    },
+
     REMOVE_NOTE(state, noteId) {
       state.notes = state.notes.filter(note => note.id != noteId)
     },
   },
 
   actions: {
+    addNote({ commit }, note) {
+      commit("ADD_NOTE", note)
+    },
+
     removeNote({ commit }, noteId) {
       commit("REMOVE_NOTE", noteId)
     },

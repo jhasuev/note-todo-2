@@ -77,5 +77,11 @@ body {
   &--full {
     width: 100%;
   }
+
+  &:disabled,
+  &.disabled {
+    pointer-events: none;
+    filter: grayscale(1) contrast(0.5);
+  }
 }
 
