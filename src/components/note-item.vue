@@ -17,7 +17,7 @@
 </template>
 
 <script>
-const TODOS_MAX_SHOW = 3
+import config from "@/config"
 export default {
   name: "Note",
   props: {
@@ -25,8 +25,11 @@ export default {
   },
   computed: {
     getTodos() {
-      const todos = this.note.todos.filter((todo, i) => i < TODOS_MAX_SHOW)
-      if (this.note.todos.length > TODOS_MAX_SHOW) todos.push("...")
+      const todos = this.note.todos.filter((todo, i) => i < config.todosMaxShow)
+      if (this.note.todos.length > config.todosMaxShow) {
+        const last = todos.push(JSON.parse(config.todoItemTpl))
+        todos[last - 1].title = "..."
+      }
       return todos
     },
   },

@@ -118,7 +118,10 @@ export default {
     ...mapActions([ 'saveNote', 'removeNote' ]),
 
     init() {
-      this.note = JSON.parse(JSON.stringify(this.getNoteById(Number(this.id))))
+      const note = this.getNoteById(Number(this.id))
+      if (!note) return this.$router.push({ name: 'home' })
+
+      this.note = JSON.parse(JSON.stringify(note))
       this.originNote = JSON.stringify(this.note)
       this.redidNote = ''
     },

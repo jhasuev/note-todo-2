@@ -1,29 +1,41 @@
 import { createStore } from "vuex"
+import config from "./config";
+
+const NOTES_FOR_EXAMPLE = JSON.stringify([
+  {
+    id: 1,
+    title: "Планы на сегодня",
+    todos: [
+      { title: "Посмотреть Рика и Морти", done: true },
+      { title: "Пойти на речку", done: false },
+      { title: "Приготовить покушать", done: true },
+    ],
+  },
+  {
+    id: 2,
+    title: "Купить",
+    todos: [
+      { title: "Молоко", done: false },
+      { title: "Яйца", done: false },
+      { title: "Сливочное масло", done: true },
+      { title: "Хлеб", done: true },
+      { title: "Томат", done: true },
+    ],
+  },
+  {
+    id: 3,
+    title: "Ничего не делать",
+    todos: [
+      { title: "Позавчера делать", done: true },
+      { title: "Вчера делать", done: true },
+      { title: "Сегодня делать", done: false },
+    ],
+  },
+])
 
 const store = createStore({
   state: {
-    notes: [
-      {
-        id: 1,
-        title: "Note 1",
-        todos: [
-          { title: "Finish this note 1", done: false },
-          { title: "Finish this note 2", done: false },
-          { title: "Finish this note 3", done: false },
-          { title: "Finish this note 4", done: false },
-        ],
-      },
-      {
-        id: 2,
-        title: "Note 2",
-        todos: [
-          { title: "Finish this note 1", done: false },
-          { title: "Finish this note 2", done: true },
-          { title: "Finish this note 3", done: false },
-          { title: "Finish this note 4", done: true },
-        ],
-      },
-    ],
+    notes: JSON.parse(localStorage[config.localStorageKey] || NOTES_FOR_EXAMPLE) ,
   },
   
   getters: {
@@ -46,19 +58,26 @@ const store = createStore({
     REMOVE_NOTE(state, noteId) {
       state.notes = state.notes.filter(note => note.id != noteId)
     },
+
+    SAVE(state) {
+      localStorage[config.localStorageKey] = JSON.stringify(state.notes)
+    },
   },
 
   actions: {
     addNote({ commit }, note) {
       commit("ADD_NOTE", note)
+      commit("SAVE")
     },
-
+    
     saveNote({ commit }, note) {
       commit("SAVE_NOTE", note)
+      commit("SAVE")
     },
-
+    
     removeNote({ commit }, noteId) {
       commit("REMOVE_NOTE", noteId)
+      commit("SAVE")
     },
   },
 })

@@ -3,7 +3,7 @@
     <div class="notes__create-btn-wrapper">
       <button class="btn" @click="goToCreate()">+ Создать заметку</button>
     </div>
-    <card title="Все заметки">
+    <card v-if="getNotes.length" title="Все заметки">
       <div>
         <note-item
           v-for="note in getNotes"
@@ -13,6 +13,12 @@
           @edit=onEdit(note.id)
           class="notes__item"
         />
+      </div>
+    </card>
+
+    <card v-else title="Заметок нет">
+      <div>
+        <button class="btn  btn--full" @click="goToCreate()">+ Создать заметку</button>
       </div>
     </card>
   </div>
