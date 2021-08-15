@@ -83,6 +83,7 @@ export default {
     onCreateNote(){
       if (this.canCreateNote) {
         // create it!
+        this.note.todos = this.note.todos.filter(todo => Validation.isValid("todoTitle", todo.title).status)
         this.addNote(this.note)
         this.$router.push({ name: 'home' })
       }
