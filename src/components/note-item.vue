@@ -6,7 +6,8 @@
         v-for="(todo, i) in getTodos"
         :key=i
         class="note__todos-item"
-      >– {{ todo }}</div>
+        :class="{ done: todo.done }"
+      >– {{ todo.title }}</div>
     </div>
     <div class="note__actions">
       <button @click="onEdit" class="btn note__actions-item">Редактировать</button>
@@ -24,7 +25,7 @@ export default {
   },
   computed: {
     getTodos() {
-      const todos = this.note.todos.map(todo => todo.title).filter((todo, i) => i < TODOS_MAX_SHOW)
+      const todos = this.note.todos.filter((todo, i) => i < TODOS_MAX_SHOW)
       if (this.note.todos.length > TODOS_MAX_SHOW) todos.push("...")
       return todos
     },
@@ -55,6 +56,10 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1;
+
+      &.done {
+        text-decoration: line-through;
+      }
     }
   }
   &__actions {
