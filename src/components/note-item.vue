@@ -35,7 +35,7 @@ export default {
     },
 
     onRemove() {
-      
+      this.$emit("remove")
     },
   },
 }

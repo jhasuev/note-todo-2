@@ -9,25 +9,46 @@
           v-for="note in getNotes"
           :key=note.id
           :note=note
+          @remove=onRemove(note.id)
           class="notes__item"
         />
       </div>
     </card>
   </div>
+
+  <confirm-popup ref="confirm" />
 </template>
 
 <script>
 import NoteItem from '../components/note-item'
+import ConfirmPopup from "@/components/confirm-popup"
 import { mapGetters } from "vuex"
 export default {
   name: "Home",
   components: {
     NoteItem,
+    ConfirmPopup,
   },
   computed: {
     ...mapGetters([
       'getNotes',
     ])
+  },
+  methods: {
+    async onRemove(noteId) {
+      try {
+        await this.$refs.confirm.show({
+          title: "Подтверждение",
+          text: "Вы точно хотите удалить эту заметку?",
+          yesBtn: "Да",
+          noBtn: "Нет",
+        })
+
+        console.log("REMOVE THIS", noteId)
+      } catch (e) {
+        console.log("NOT REMOVE THIS", noteId)
+      }
+    },
   },
 }
 </script>
