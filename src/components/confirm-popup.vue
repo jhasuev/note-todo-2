@@ -26,7 +26,6 @@ export default {
       yesBtn: "",
       noBtn: "",
 
-      action: false,
       popup: false,
 
       resolve: undefined,
@@ -35,12 +34,11 @@ export default {
   },
   methods: {
     init(params){
-      this.title = params.title
-      this.text = params.text
-      this.yesBtn = params.yesBtn
-      this.noBtn = params.noBtn
+      this.title = params.title || "Подтверждение"
+      this.text = params.text || "Вы уверены, что хотите продолжить?"
+      this.yesBtn = params.yesBtn || "Да"
+      this.noBtn = params.noBtn || "Нет"
       
-      this.action = ''
       this.popup = true
     },
 
@@ -50,7 +48,6 @@ export default {
       this.yesBtn = ""
       this.noBtn = ""
       
-      this.action = ''
       this.popup = false
     },
     

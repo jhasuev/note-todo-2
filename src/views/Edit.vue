@@ -158,10 +158,7 @@ export default {
 
     cancel() {
       this.$refs.confirm.show({
-        title: "Подтверждение",
         text: "Вы точно хотите отменить редактирование? Изменения будут потеряны.",
-        yesBtn: "Да",
-        noBtn: "Нет",
       }).then(() => {
         this.$router.push({ name: 'home' })
       })
@@ -169,10 +166,7 @@ export default {
     
     remove() {
       this.$refs.confirm.show({
-        title: "Подтверждение",
         text: "Вы точно хотите удалить эту заметку?",
-        yesBtn: "Да",
-        noBtn: "Нет",
       }).then(() => {
         this.removeNote(this.note.id)
         this.$router.push({ name: 'home' })

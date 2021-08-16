@@ -44,10 +44,7 @@ export default {
 
     remove(noteId) {
       this.$refs.confirm.show({
-        title: "Подтверждение",
         text: "Вы точно хотите удалить эту заметку?",
-        yesBtn: "Да",
-        noBtn: "Нет",
       }).then(() => {
         this.removeNote(noteId)
       })
