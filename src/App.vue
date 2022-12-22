@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO add menu -->
   <router-view />
 </template>
 

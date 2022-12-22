@@ -9,13 +9,13 @@ const routes = [
   {
     path: "/create",
     name: "create",
-    component: () => import("@/views/Create")
+    component: () => import("@/views/CreateAndEditIndex")
   },
   {
     path: "/edit/:id",
     name: "edit",
     props: true,
-    component: () => import("@/views/Edit")
+    component: () => import("@/views/CreateAndEditIndex")
   },
   {
     path: "/:pathMatch(.*)*",

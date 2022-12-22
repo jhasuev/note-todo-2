@@ -3,8 +3,8 @@
     <div class="note__title">{{ note.title }}</div>
     <div class="note__todos">
       <div
-        v-for="(todo, i) in getTodos"
-        :key=i
+        v-for="todo in getTodos"
+        :key=todo.id
         class="note__todos-item"
         :class="{ done: todo.done }"
       >– {{ todo.title }}</div>

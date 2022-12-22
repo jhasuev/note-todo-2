@@ -9,7 +9,7 @@
   </card>
 </template>
 
-<script>
+<script lang="js">
 export default {
   name: "NotFound404",
 }

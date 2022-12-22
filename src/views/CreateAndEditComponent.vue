@@ -1,16 +1,21 @@
 <template>
-  <card title="Изменения заметки">
+  <card :title="isCreate ? 'Создание заметки' : 'Изменение заметки'">
     <div class="edit">
       <input type="text" class="form-field" placeholder="Название заметки" v-model="note.title">
+
+      <form-errors
+        v-if="note.title && getNoteTitleValidInfo.errors.length"
+        :errors=getNoteTitleValidInfo.errors
+      />
+
       <div class="edit__todos">
         <div>
           <todo-item
             v-for="todo, i in note.todos"
-            :key="i"
+            :key=todo.id
             class="edit__todos-item"
 
-            :done=todo.done
-            :title=todo.title
+            v-bind=todo
             
             @done="onDone(i, $event)"
             @title="onTodoTitleChange(i, $event)"
@@ -23,12 +28,13 @@
           @click=onClickAddTodoItem
         >Добавить пункт</button>
       </div>
+
       <div class="edit__actions">
         <button
           class="btn btn--full btn--green  edit__actions-btn"
-          :disabled="!canSave"
+          :disabled="!canSubmit"
           @click=save
-        >Сохранить</button>
+        >{{ isCreate ? 'Создать' : 'Сохранить' }}</button>
 
         <button
           v-if="canRedo"
@@ -43,7 +49,7 @@
         >Повторить отмененное изменение</button>
       </div>
 
-      <div class="edit__actions">
+      <div v-if="!isCreate" class="edit__actions">
         <button class="btn btn--full  edit__actions-btn" @click=cancel>Отменить редактирование</button>
         <button class="btn btn--full btn--red  edit__actions-btn" @click=remove>Удалить</button>
       </div>
@@ -58,15 +64,16 @@ import config from "@/config"
 import TodoItem from "@/components/todo-item"
 import ConfirmPopup from "@/components/confirm-popup"
 import Validation from "@/valid"
-import { mapActions, mapGetters } from "vuex"
+
 export default {
-  name: "Edit",
+  name: "CreateAndEditComponent",
   components: {
     TodoItem,
     ConfirmPopup,
   },
   props: {
-    id: { type: [Number, String], required: true }
+    noteData: { type: Object },
+    isCreate: { type: Boolean },
   },
   data() {
     return {
@@ -86,22 +93,24 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([ 'getNoteById', 'getNotes' ]),
+    getNoteTitleValidInfo() {
+      return Validation.isValid("noteTitle", this.note.title)
+    },
 
     hasChanges() {
       return JSON.stringify(this.note) !== this.originNote
     },
 
-    canSave() {
+    canSubmit() {
       return this.hasChanges && Validation.isValid("noteTitle", this.note.title).status
     },
 
     canRedo() {
-      return this.hasChanges
+      return !this.isCreate && this.hasChanges
     },
 
     canUndo() {
-      return this.redidNote
+      return !this.isCreate && this.redidNote
     },
 
     canAddTodoItem(){
@@ -115,22 +124,17 @@ export default {
   },
 
   methods: {
-    ...mapActions([ 'saveNote', 'removeNote' ]),
-
-    init() {
-      const note = this.getNoteById(Number(this.id))
-      if (!note) return this.$router.push({ name: 'home' })
-
-      this.note = JSON.parse(JSON.stringify(note))
+    init(noteData) {
+      this.note = JSON.parse(JSON.stringify(noteData ?? this.noteData))
       this.originNote = JSON.stringify(this.note)
       this.redidNote = ''
     },
 
     save() {
-      if (this.canSave) {
+      if (this.canSubmit) {
         this.note.todos = this.note.todos.filter(todo => Validation.isValid("todoTitle", todo.title).status)
-        this.saveNote(this.note)
-        this.init()
+        this.$emit('save', this.note)
+        this.init(this.note)
       }
     },
 
@@ -160,16 +164,15 @@ export default {
       this.$refs.confirm.show({
         text: "Вы точно хотите отменить редактирование? Изменения будут потеряны.",
       }).then(() => {
-        this.$router.push({ name: 'home' })
+        this.$emit('cancel')
       })
     },
-    
+
     remove() {
       this.$refs.confirm.show({
         text: "Вы точно хотите удалить эту заметку?",
       }).then(() => {
-        this.removeNote(this.note.id)
-        this.$router.push({ name: 'home' })
+        this.$emit('remove', this.note.id)
       })
     },
 
@@ -214,6 +217,5 @@ export default {
     }
   }
 }
-
 
 </style>
